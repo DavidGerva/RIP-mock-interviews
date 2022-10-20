@@ -19,6 +19,9 @@ Note that jumping from index i to index i + x always constitutes one jump, no ma
     res = 3
     “””
 
+### Links & material
+* [Jump Game II - Greedy - Leetcode 45 - Python](https://www.youtube.com/watch?v=dJ7sWiOoK7g), Neetcode solution of similar problem
+
 ## Interview solution
 
 ```py
@@ -113,6 +116,3 @@ public static int minNumberOfJumps(int[] array) {
     return jumps + 1;
   }
 ```
-
-## Links & material
-* [Jump Game II - Greedy - Leetcode 45 - Python](https://www.youtube.com/watch?v=dJ7sWiOoK7g), Neetcode solution of similar problem
