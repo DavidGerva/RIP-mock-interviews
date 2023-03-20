@@ -1,76 +1,67 @@
-# Mock 05 | 16/11/2022 | MarcoZamboni vs HERZ
+# Mock 06 | 02/03/2023 | MarcoZamboni vs you_33
 
-The fibonacci sequence is defined as F(1) = 1; F(2) = 1; F(N) = F(N-1) + F(N-2) for all natural numbers N except 1 and 2.
-Given an index k output the k-th number of the fibonacci sequence.
+You are a visitor in the capital city of Algoland and you need to attend an algorithm conference tomorrow morning.
+Tonight instead you'll attend a party and probably go to bed quite late, but since you really value your sleep you want to find what is the latest time you can depart from your hotel when going the the conference.
+We can see the city as a system of streets and interceptions, each street connects 2 interceptions, can be walked in both directions and take some time to be walked.
+Intersections are numbered from 0 to N-1, your hotel is located at intersection 0 and the conference venue at intersection N-1.
+What is the latest time t you can depart from your hotel if you want to arrive at the conference at time t_0 = 0? (Note that t will be a negative number)
 
-    Input #1:
-    k=2
-
-    Output #1:
-    1
-
-    Input #2:
-    k=7
-
-    Output #2:
-    13
+The input contains the number N of intersection and a list of streets, each street is defined by three numbers: a, b and t, it connects intersections a and b and takes t time to be walked.
 
 
-### Links & material
-- [Similar LeetCode problem](https://leetcode.com/problems/find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k/)
+### Example
+In:
+
+    5
+    0 1 6
+    0 3 1
+    1 2 2
+    1 3 2
+    1 4 5
+    2 3 1
+    2 4 5
+
+Out:
+
+    7
+
+Path:
+
+    0 -> 3 -> 2 -> 4
+
 
 ## Interview solution
 
 ```py
-def fibonacci1(n):
-  if n == 1 or n == 2: # b1
-    return 1
-  elif n in fib_res: # b2
-    return fib_res[n]
-  else: # b3
-		fib_res[n] = fibonacci1(n - 2) + fibonacci1(n-1)
-    return fib_res[n]
-
-def fibonacci2(n):
-	for i in range(3, n):
+#intersection = node
+#street = edge
+#
+graph = {
+  0 : [(1,6), (3,1)]
+}
 
 
-# fibonacci(5) -> 2 + 3 = 5
-# fibonacci(3) -> 1 + 1 = 2
-# fibonacci(4) -> 2 + 1 = 3
-# tc = O(k)
-# n = dimension of input
-# n ~ log(k)
+def Solution(N: int, streets: list[tuple[int, int, int]]):
+  graph = defaultdict(list)
+  for street in streets: # O(E)
+    graph[street[0]].append((street[1],street[2]))
+    graph[street[1]].append((street[0],street[2]))
+  MAX_FLOAT = float("inf")
+  distances = {node:MAX_FLOAT for node in range(0,n-1)} # O(V)
+  distances[start]=0
+  queue = heap([(0,0)])
 
-# O(2^n)
+  while queue:
+    (distance, node) = queue.pop() #O(1)
+    if distance > distance[node]:
+        continue
+    for neighbor in graph[node]:
+      d = neighbor[1] + distance #(1)
+      if d < distances[neighbor[0]]: #(1)
+      	distances[neighbor[0]] = neighbor[1] + distance #(1)
+        queue.update((d, neighbor)) #(LOG(V)))
+  #(V+E*Log(E))
+  return 0-distance[N-1]
+
 
 ```
-
-## Follow up
-
-Assume now that your solution is called Q times in sequence with an input between 1 and K, do you want to modify your code?
-
-```py
-def test():
-  for _ in range(0, Q) # i = i..Q-1
-		fibonacci(randint(1, K))
-
-# O(max(Ki))
-```
-
-Now that you’re comfortable with the Fibonacci sequence we want to decompose a natural number n
-into a set of Fibonacci numbers such that their sum is equal to n,
-return one set that satisfy that condition of -1 if such a set doesn’t exist
-
-
-    Input #1:
-    8
-
-    Output #1:
-    [8]
-
-    Input #2:
-    17
-
-    Output #2:
-    [1, 1, 2, 5, 8]
